@@ -449,7 +449,7 @@ static AmplitudeLocationManagerDelegate *locationManagerDelegate;
         NSLog(@"ERROR: apiKey cannot be nil or empty, set apiKey with initializeApiKey: before calling logEvent:");
         return;
     }
-    NSNumber *timestamp = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000];
+    NSNumber *timestamp = [NSNumber numberWithLongLong:(long long)[[NSDate date] timeIntervalSince1970] * 1000];
     
     [backgroundQueue addOperationWithBlock:^{
         
@@ -586,7 +586,7 @@ static AmplitudeLocationManagerDelegate *locationManagerDelegate;
         
         @synchronized (eventsData) {
             NSMutableArray *events = [eventsData objectForKey:@"events"];
-            long long numEvents = limit ? fminl([events count], 100) : [events count];
+            long long numEvents = limit ? (long long)fminl([events count], 100) : [events count];
             if (numEvents == 0) {
                 updatingCurrently = NO;
                 return;
@@ -632,7 +632,7 @@ static AmplitudeLocationManagerDelegate *locationManagerDelegate;
     
     // Add timestamp of upload
     [postData appendData:[@"&upload_time=" dataUsingEncoding:NSUTF8StringEncoding]];
-    NSString *timestampString = [[NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000] stringValue];
+    NSString *timestampString = [[NSNumber numberWithLongLong:(long long)[[NSDate date] timeIntervalSince1970] * 1000] stringValue];
     [postData appendData:[timestampString dataUsingEncoding:NSUTF8StringEncoding]];
     
     // Add checksum
@@ -769,7 +769,7 @@ static AmplitudeLocationManagerDelegate *locationManagerDelegate;
 
 + (void)startSession
 {
-    NSNumber *now = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000];
+    NSNumber *now = [NSNumber numberWithLongLong:(long long)[[NSDate date] timeIntervalSince1970] * 1000];
     
     [mainQueue addOperationWithBlock:^{
         // Remove turn off session later callback
